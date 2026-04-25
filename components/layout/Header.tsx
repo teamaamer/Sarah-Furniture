@@ -18,7 +18,7 @@ export default function Header() {
             <div className="text-gray-500">
               {businessInfo.locations[0].fullAddress}
             </div>
-            <a
+<a
               href={`tel:${businessInfo.phone}`}
               className="text-gray-900 font-medium hover:text-primary transition-colors"
             >
