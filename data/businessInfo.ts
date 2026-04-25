@@ -1,0 +1,72 @@
+export const businessInfo = {
+  name: "Sarah Furniture Liquidation",
+  rating: 4.7,
+  reviewCount: 747,
+  phone: "(904) 484-8434",
+  email: "Sarahfurnitureusa@gmail.com",
+  hours: "Mon - Sun | 9:00 am - 9:00 pm",
+  locations: [
+    {
+      id: "atlantic",
+      name: "Atlantic Blvd Location",
+      address: "7534 Atlantic Blvd",
+      city: "Jacksonville",
+      state: "FL",
+      zip: "32211",
+      fullAddress: "7534 Atlantic Blvd, Jacksonville, FL 32211",
+      isPrimary: true,
+    },
+    {
+      id: "dunn",
+      name: "Dunn Ave Location",
+      address: "3000 Dunn Ave Unit 40",
+      city: "Jacksonville",
+      state: "FL",
+      zip: "32218",
+      fullAddress: "3000 Dunn Ave Unit 40, Jacksonville, FL 32218",
+      isPrimary: false,
+    },
+  ],
+  paymentMethods: [
+    "American Express",
+    "Apple Pay",
+    "Cash",
+    "Discover",
+    "Financing",
+    "MasterCard",
+    "Visa",
+    "Zelle",
+    "ACIMA",
+    "SNAP",
+  ],
+  brands: ["Rooms To Go", "JaxCo", "Duvall"],
+  languages: ["English"],
+  socialMedia: {
+    facebook: "https://www.facebook.com/SarahFurniturejax/",
+    instagram: "https://www.instagram.com/sarahfurnitureliquidation",
+    twitter: "#",
+  },
+};
+
+export const navigation = {
+  main: [
+    { name: "Home", href: "/" },
+    {
+      name: "Furniture Products",
+      href: "/products",
+      dropdown: [
+        { name: "Sectionals", href: "/products/sectionals" },
+        { name: "Beds", href: "/products/beds" },
+        { name: "Sofa Sets", href: "/products/sofa-sets" },
+        { name: "Outdoor Furniture", href: "/products/outdoor-furniture" },
+        { name: "Wood Furniture", href: "/products/wood-furniture" },
+        { name: "Dining Rooms & Coffee Tables", href: "/products/dining-coffee-tables" },
+      ],
+    },
+    { name: "Reviews", href: "/reviews" },
+    { name: "About", href: "/about" },
+    { name: "Locations", href: "/locations" },
+    { name: "Financing & Leasing", href: "/financing" },
+    { name: "Request a Call Back", href: "/contact" },
+  ],
+};
