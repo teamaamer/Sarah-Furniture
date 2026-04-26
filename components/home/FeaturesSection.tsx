@@ -15,7 +15,7 @@ const features = [
         <path d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
-    title: "Local Delivery Within 24 Hours",
+    title: "Same-Day Delivery Available",
     description:
       "Get your furniture delivered fast with our same-day and next-day delivery service.",
   },

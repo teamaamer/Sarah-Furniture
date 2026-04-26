@@ -30,6 +30,20 @@ export default function RootLayout({
           gtag('js', new Date());
           gtag('config', 'AW-10896725335');
         `}</Script>
+        <Script id="metricool-tracker" strategy="afterInteractive">{`
+          function loadScript(a){
+            var b=document.getElementsByTagName("head")[0],
+            c=document.createElement("script");
+            c.type="text/javascript",
+            c.src="https://tracker.metricool.com/resources/be.js",
+            c.onreadystatechange=a,
+            c.onload=a,
+            b.appendChild(c)
+          }
+          loadScript(function(){
+            beTracker.t({hash:"e88453623dd596319f5a133fdb290ab1"});
+          });
+        `}</Script>
       </head>
       <body className={inter.className}>
         <PromoBanner />
