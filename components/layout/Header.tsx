@@ -3,11 +3,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { ShoppingCart } from "lucide-react";
 import { businessInfo, navigation } from "@/data/businessInfo";
+import { useCart } from "@/components/cart/cart-provider";
+import type { ShopifyCollection } from "@/lib/shopify/types";
 
-export default function Header() {
+interface HeaderProps {
+  collections?: ShopifyCollection[];
+}
+
+export default function Header({ collections = [] }: HeaderProps) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { cart, openCart } = useCart();
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
@@ -78,8 +86,20 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA Button - Right */}
-          <div className="hidden lg:block">
+          {/* CTA Button & Cart - Right */}
+          <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={openCart}
+              className="relative p-2.5 text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Open cart"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cart && cart.totalQuantity > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {cart.totalQuantity > 9 ? '9+' : cart.totalQuantity}
+                </span>
+              )}
+            </button>
             <a
               href={`tel:${businessInfo.phone}`}
               className="inline-flex items-center gap-2 bg-primary text-white px-6 py-2.5 rounded-md text-sm font-medium hover:bg-red-700 transition-all shadow-sm hover:shadow-md"
@@ -89,6 +109,22 @@ export default function Header() {
               </svg>
               Call Now
             </a>
+          </div>
+
+          {/* Mobile Cart + Menu */}
+          <div className="flex lg:hidden items-center gap-1">
+            <button
+              onClick={openCart}
+              className="relative p-2 text-gray-700"
+              aria-label="Open cart"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cart && cart.totalQuantity > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                  {cart.totalQuantity > 9 ? '9+' : cart.totalQuantity}
+                </span>
+              )}
+            </button>
           </div>
 
           {/* Mobile Menu Button */}

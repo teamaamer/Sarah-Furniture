@@ -6,6 +6,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingCTA from "@/components/shared/FloatingCTA";
 import PromoBanner from "@/components/shared/PromoBanner";
+import { CartProvider } from "@/components/cart/cart-provider";
+import { CartDrawer } from "@/components/cart/cart-drawer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,11 +34,14 @@ export default function RootLayout({
         `}</Script>
       </head>
       <body className={inter.className}>
-        <PromoBanner />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <FloatingCTA />
+        <CartProvider>
+          <PromoBanner />
+          <Header />
+          <CartDrawer />
+          <main>{children}</main>
+          <Footer />
+          <FloatingCTA />
+        </CartProvider>
       </body>
     </html>
   );
