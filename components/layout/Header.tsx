@@ -58,19 +58,45 @@ export default function Header({ collections = [] }: HeaderProps) {
               <div
                 key={item.name}
                 className="relative"
-                onMouseEnter={() => item.dropdown && setActiveDropdown(item.name)}
+                onMouseEnter={() => setActiveDropdown(item.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <Link
                   href={item.href}
-                  className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                  className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1"
                 >
                   {item.name}
+                  {item.name === "Categories" && collections.length > 0 && (
+                    <svg className="w-3 h-3 mt-0.5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" stroke="currentColor">
+                      <path d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
                 </Link>
 
-                {/* Dropdown */}
-                {item.dropdown && activeDropdown === item.name && (
-                  <div className="absolute left-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2">
+                {/* Dynamic Categories Dropdown */}
+                {item.name === "Categories" && activeDropdown === item.name && collections.length > 0 && (
+                  <div className="absolute left-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
+                    <Link
+                      href="/products"
+                      className="block px-4 py-2.5 text-sm font-semibold text-gray-900 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-100 mb-1"
+                    >
+                      All Products
+                    </Link>
+                    {collections.map((col) => (
+                      <Link
+                        key={col.id}
+                        href={`/collections/${col.handle}`}
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors"
+                      >
+                        {col.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                {/* Static dropdown for non-Categories items */}
+                {item.name !== "Categories" && item.dropdown && activeDropdown === item.name && (
+                  <div className="absolute left-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
                     {item.dropdown.map((subItem) => (
                       <Link
                         key={subItem.name}
@@ -151,11 +177,27 @@ export default function Header({ collections = [] }: HeaderProps) {
                 <Link
                   href={item.href}
                   className="block py-2.5 text-sm font-medium text-gray-700 hover:text-primary"
-                  onClick={() => !item.dropdown && setMobileMenuOpen(false)}
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
-                {item.dropdown && (
+                {/* Dynamic collections under Categories */}
+                {item.name === "Categories" && collections.length > 0 && (
+                  <div className="pl-4 space-y-1">
+                    {collections.map((col) => (
+                      <Link
+                        key={col.id}
+                        href={`/collections/${col.handle}`}
+                        className="block py-2 text-sm text-gray-600 hover:text-primary"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {col.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+                {/* Static dropdowns for other nav items */}
+                {item.name !== "Categories" && item.dropdown && (
                   <div className="pl-4 space-y-1">
                     {item.dropdown.map((subItem) => (
                       <Link

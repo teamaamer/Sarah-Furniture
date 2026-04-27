@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import FloatingCTA from "@/components/shared/FloatingCTA";
 import PromoBanner from "@/components/shared/PromoBanner";
@@ -31,6 +31,20 @@ export default function RootLayout({
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'AW-10896725335');
+        `}</Script>
+        <Script id="metricool-tracker" strategy="afterInteractive">{`
+          function loadScript(a){
+            var b=document.getElementsByTagName("head")[0],
+            c=document.createElement("script");
+            c.type="text/javascript",
+            c.src="https://tracker.metricool.com/resources/be.js",
+            c.onreadystatechange=a,
+            c.onload=a,
+            b.appendChild(c)
+          }
+          loadScript(function(){
+            beTracker.t({hash:"e88453623dd596319f5a133fdb290ab1"});
+          });
         `}</Script>
       </head>
       <body className={inter.className}>
