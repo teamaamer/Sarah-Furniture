@@ -137,4 +137,4 @@ The built files will be in the `.next` directory.
 
 ## License
 
-© 2024 Sarah Furniture Liquidation. All rights reserved.
+© 2025 Sarah Furniture Liquidation. All rights reserved.
