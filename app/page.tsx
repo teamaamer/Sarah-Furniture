@@ -1,62 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
 import HeroSection from "@/components/home/HeroSection";
-import FeaturesSection from "@/components/home/FeaturesSection";
+import FacebookFeed from "@/components/home/FacebookFeed";
 import InstagramFeed from "@/components/home/InstagramFeed";
-import ReviewCard from "@/components/shared/ReviewCard";
 import SectionTitle from "@/components/shared/SectionTitle";
-import ImageGallery from "@/components/shared/ImageGallery";
-import { ProductCard } from "@/components/products/product-card";
-import { getProducts, getAllCollections } from "@/lib/shopify";
-import { reviews } from "@/data/reviews";
-
-const furnitureImages = [
-  "/images/sarah1.jpeg",
-  "/images/sarah2.jpeg",
-  "/images/sarah3.jpeg",
-  "/images/sarah4.jpeg",
-  "/images/sarah5.jpeg",
-  "/images/sarah6.jpeg",
-  "/images/sarah7.jpeg",
-  "/images/sarah8.jpeg",
-];
+import { getAllCollections } from "@/lib/shopify";
 
 export default async function Home() {
-  const [featuredProducts, collections] = await Promise.all([
-    getProducts(undefined, 6),
-    getAllCollections(8),
-  ]);
-
-  const featuredReviews = reviews.slice(0, 3);
+  const collections = await getAllCollections(8);
 
   return (
     <>
+      {/* 1. Hero */}
       <HeroSection />
 
-      {/* Featured Products from Shopify */}
-      {featuredProducts.length > 0 && (
-        <section className="py-24 lg:py-32 bg-gray-50">
-          <div className="container-custom">
-            <SectionTitle
-              title="Featured Products"
-              subtitle="Shop our latest furniture arrivals at unbeatable prices"
-              centered
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-            <div className="text-center mt-16">
-              <Link href="/products" className="btn-primary inline-block">
-                Shop All Products
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Shop by Collection */}
+      {/* 2. Categories */}
       {collections.length > 0 && (
         <section className="py-24 lg:py-32 bg-white">
           <div className="container-custom">
@@ -107,63 +65,11 @@ export default async function Home() {
         </section>
       )}
 
-      <FeaturesSection />
+      {/* 3. Facebook Feed */}
+      <FacebookFeed />
 
-      <section className="py-24 lg:py-32 bg-white">
-        <div className="container-custom">
-          <SectionTitle
-            title="Our Furniture Showroom"
-            subtitle="Browse our collection of quality furniture at unbeatable prices"
-            centered
-          />
-          <ImageGallery images={furnitureImages} />
-          <div className="text-center mt-16">
-            <Link href="/products" className="btn-primary inline-block">
-              Explore All Products
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 lg:py-32 bg-gray-50">
-        <div className="container-custom">
-          <SectionTitle
-            title="What Our Customers Say"
-            subtitle="Read reviews from satisfied customers"
-            centered
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {featuredReviews.map((review) => (
-              <ReviewCard key={review.id} {...review} />
-            ))}
-          </div>
-          <div className="text-center mt-16">
-            <Link href="/reviews" className="btn-secondary inline-block">
-              Read All Reviews
-            </Link>
-          </div>
-        </div>
-      </section>
-
+      {/* 4. Instagram Feed */}
       <InstagramFeed />
-
-      <section className="py-24 lg:py-32 bg-white">
-        <div className="container-custom text-center">
-          <SectionTitle
-            title="Ready to Save Big on Quality Furniture?"
-            subtitle="Visit us today or request a call back to get started"
-            centered
-          />
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href="/locations" className="btn-primary">
-              Find Our Locations
-            </Link>
-            <Link href="/contact" className="btn-secondary">
-              Request a Call Back
-            </Link>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

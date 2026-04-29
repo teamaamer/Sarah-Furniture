@@ -8,7 +8,7 @@ export default function LocationsPage() {
       <div className="container-custom">
         <SectionTitle
           title="Our Locations"
-          subtitle="Visit us at either of our Jacksonville showrooms"
+          subtitle="Visit us at our Jacksonville location"
           centered
         />
 

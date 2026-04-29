@@ -48,7 +48,7 @@ export default function HeroSection() {
                 href="/locations"
                 className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 px-8 py-4 rounded-md text-base font-medium hover:bg-white/20 transition-all"
               >
-                Visit Showroom
+                Our Location
               </Link>
             </div>
           </div>
