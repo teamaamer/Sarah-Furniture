@@ -5,7 +5,6 @@ import "./globals.css";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import FloatingCTA from "@/components/shared/FloatingCTA";
-import PromoBanner from "@/components/shared/PromoBanner";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 
@@ -49,7 +48,6 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <CartProvider>
-          <PromoBanner />
           <Header />
           <CartDrawer />
           <main>{children}</main>
