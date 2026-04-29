@@ -1,12 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { formatPrice } from '@/lib/shopify';
 import { HIDE_PRICES } from '@/lib/config';
-import { useCart } from '@/components/cart/cart-provider';
 import type { ShopifyProduct } from '@/lib/shopify/types';
 
 interface ProductCardProps {
@@ -18,18 +16,6 @@ export function ProductCard({ product }: ProductCardProps) {
   const minPrice = product.priceRange.minVariantPrice;
   const maxPrice = product.priceRange.maxVariantPrice;
   const hasMultiplePrices = minPrice.amount !== maxPrice.amount;
-  const defaultVariant = product.variants.edges[0]?.node;
-  const { addToCart, isLoading } = useCart();
-  const [isAdding, setIsAdding] = useState(false);
-
-  const handleAddToCart = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!defaultVariant || !product.availableForSale) return;
-    setIsAdding(true);
-    await addToCart(defaultVariant.id, 1);
-    setIsAdding(false);
-  };
 
   return (
     <div className="group flex flex-col h-full bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
@@ -89,18 +75,10 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="flex gap-2">
             <Link
               href={`/products/${product.handle}`}
-              className="flex-1 text-center border-2 border-gray-900 text-gray-900 py-2 rounded-md text-sm font-semibold hover:bg-gray-900 hover:text-white transition-colors"
+              className="flex-1 text-center bg-primary text-white py-2 rounded-md text-sm font-semibold hover:bg-red-700 transition-colors"
             >
               View Details
             </Link>
-            <button
-              onClick={handleAddToCart}
-              disabled={!product.availableForSale || isLoading || isAdding}
-              className="flex-1 bg-primary text-white py-2 rounded-md text-sm font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
-            >
-              <ShoppingCart className="h-4 w-4" />
-              {isAdding ? 'Adding...' : 'Add to Cart'}
-            </button>
           </div>
         </div>
       </div>

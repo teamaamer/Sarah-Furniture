@@ -5,9 +5,7 @@ import "./globals.css";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import FloatingCTA from "@/components/shared/FloatingCTA";
-import { CartProvider } from "@/components/cart/cart-provider";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import { CartDrawer } from "@/components/cart/cart-drawer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,13 +47,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <LanguageProvider>
-          <CartProvider>
-            <Header />
-            <CartDrawer />
-            <main>{children}</main>
-            <Footer />
-            <FloatingCTA />
-          </CartProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <FloatingCTA />
         </LanguageProvider>
       </body>
     </html>

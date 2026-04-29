@@ -1,11 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { ShoppingCart, Check, Plus, Minus, Zap } from 'lucide-react';
+import Link from 'next/link';
 import { formatPrice } from '@/lib/shopify';
 import { HIDE_PRICES } from '@/lib/config';
-import { useCart } from '@/components/cart/cart-provider';
+import { businessInfo } from '@/data/businessInfo';
 import type { ShopifyProduct, ShopifyVariant } from '@/lib/shopify/types';
 
 interface AddToCartButtonProps {
@@ -15,24 +14,7 @@ interface AddToCartButtonProps {
 }
 
 export function AddToCartButton({ product, defaultVariant, onVariantChange }: AddToCartButtonProps) {
-  const { addToCart, isLoading } = useCart();
-  const router = useRouter();
-  const [added, setAdded] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(defaultVariant);
-  const [quantity, setQuantity] = useState(1);
-
-  const handleAddToCart = async () => {
-    await addToCart(selectedVariant.id, quantity);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  };
-
-  const handleBuyNow = async () => {
-    await addToCart(selectedVariant.id, quantity);
-    router.push('/cart');
-  };
-
-  const maxQuantity = selectedVariant.quantityAvailable || 999;
 
   return (
     <div className="space-y-6">
@@ -107,66 +89,40 @@ export function AddToCartButton({ product, defaultVariant, onVariantChange }: Ad
         </div>
       )}
 
-      {/* Quantity */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-5">
-        <label className="block text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
-          Quantity
-        </label>
-        <div className="flex items-stretch gap-2 max-w-[180px]">
-          <button
-            type="button"
-            onClick={() => setQuantity(q => Math.max(1, q - 1))}
-            disabled={quantity <= 1}
-            className="h-12 w-12 border-2 border-gray-300 rounded-xl flex items-center justify-center text-gray-700 hover:border-gray-900 transition-colors disabled:opacity-40"
-          >
-            <Minus className="h-4 w-4" />
-          </button>
-          <input
-            type="number"
-            min="1"
-            max={maxQuantity}
-            value={quantity}
-            onChange={(e) => setQuantity(Math.max(1, Math.min(maxQuantity, parseInt(e.target.value) || 1)))}
-            className="flex-1 h-12 text-center border-2 border-gray-300 rounded-xl text-lg font-bold text-gray-900 focus:border-primary focus:outline-none"
-          />
-          <button
-            type="button"
-            onClick={() => setQuantity(q => Math.min(maxQuantity, q + 1))}
-            disabled={quantity >= maxQuantity}
-            className="h-12 w-12 border-2 border-gray-300 rounded-xl flex items-center justify-center text-gray-700 hover:border-gray-900 transition-colors disabled:opacity-40"
-          >
-            <Plus className="h-4 w-4" />
-          </button>
+      {/* In-Store Notice */}
+      <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4">
+        <svg className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20A10 10 0 0012 2z" />
+        </svg>
+        <div>
+          <p className="text-amber-800 font-semibold text-sm">In-Store Purchase Only</p>
+          <p className="text-amber-700 text-sm mt-0.5">
+            This item is available exclusively at our Jacksonville showroom — <span className="font-medium">7534 Atlantic Blvd</span>. Visit us in person to purchase.
+          </p>
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex flex-col md:flex-row gap-3">
-        <button
-          onClick={handleBuyNow}
-          disabled={!product.availableForSale || isLoading || !selectedVariant.availableForSale}
-          className="flex-1 h-14 bg-primary hover:bg-red-700 text-white font-bold text-lg rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+      {/* Store CTAs */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <Link
+          href="/locations"
+          className="flex-1 h-14 bg-primary hover:bg-red-700 text-white font-bold text-base rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
         >
-          <Zap className="h-5 w-5" />
-          Buy Now
-        </button>
-        <button
-          onClick={handleAddToCart}
-          disabled={!product.availableForSale || isLoading || !selectedVariant.availableForSale}
-          className="flex-1 h-14 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white font-semibold text-lg rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          Visit Our Store
+        </Link>
+        <a
+          href={`tel:${businessInfo.phone}`}
+          className="flex-1 h-14 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white font-semibold text-base rounded-xl flex items-center justify-center gap-2 transition-colors"
         >
-          {added ? (
-            <>
-              <Check className="h-5 w-5" />
-              Added!
-            </>
-          ) : (
-            <>
-              <ShoppingCart className="h-5 w-5" />
-              Add to Cart
-            </>
-          )}
-        </button>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+          {businessInfo.phone}
+        </a>
       </div>
     </div>
   );
