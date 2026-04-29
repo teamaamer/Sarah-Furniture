@@ -22,7 +22,7 @@ export default function Header({ collections = [] }: HeaderProps) {
       {/* Top Bar - Minimal */}
       <div className="border-b border-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-10 text-xs">
+          <div className="flex items-center justify-between h-8 text-xs">
             <div className="text-gray-500">
               {businessInfo.locations[0].fullAddress}
             </div>
@@ -38,7 +38,7 @@ export default function Header({ collections = [] }: HeaderProps) {
 
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-14">
           {/* Logo - Left */}
           <Link href="/" className="flex-shrink-0">
             <Image
@@ -46,7 +46,7 @@ export default function Header({ collections = [] }: HeaderProps) {
               alt={businessInfo.name}
               width={180}
               height={70}
-              className="h-14 w-auto object-contain"
+              className="h-16 w-auto object-contain"
               priority
               style={{ mixBlendMode: 'multiply' }}
             />
