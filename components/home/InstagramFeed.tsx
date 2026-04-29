@@ -18,12 +18,12 @@ export default function InstagramFeed() {
   }, []);
 
   const instagramPosts = [
+    "https://www.instagram.com/p/DXpX5ibjNjR/",
+    "https://www.instagram.com/p/DXo7vGmjOiE/",
+    "https://www.instagram.com/reel/DXnJR68ghow/",
     "https://www.instagram.com/p/DXZbp2zjLl_/",
     "https://www.instagram.com/reel/DXW6Yt8FOVQ/",
     "https://www.instagram.com/p/DXUMA1rjILc/",
-    "https://www.instagram.com/p/DXSZ6FRjHmO/",
-    "https://www.instagram.com/p/DXO-IBYk70D/",
-    "https://www.instagram.com/p/DXNbBiLjH5h/",
   ];
 
   return (
