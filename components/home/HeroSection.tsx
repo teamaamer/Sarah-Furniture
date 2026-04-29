@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { businessInfo } from "@/data/businessInfo";
 
 export default function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -33,12 +35,16 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative h-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center justify-center text-center">
-        {/* Badge */}
-        <div className="mb-4">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-white/80 border border-white/20 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            {t.hero.badge}
-          </span>
+        {/* Logo Badge */}
+        <div className="mb-6">
+          <Image
+            src="/images/sarahlogo.png"
+            alt={businessInfo.name}
+            width={260}
+            height={100}
+            className="h-24 w-auto object-contain drop-shadow-2xl"
+            priority
+          />
         </div>
 
         {/* Headline */}
@@ -85,6 +91,15 @@ export default function HeroSection() {
               <div className="text-xs text-white/50 uppercase tracking-widest mt-0.5">{label}</div>
             </div>
           ))}
+        </div>
+
+        {/* Location */}
+        <div className="mt-8 flex items-center gap-2 text-white/60 text-sm">
+          <svg className="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span>{businessInfo.locations[0].fullAddress}</span>
         </div>
       </div>
     </section>

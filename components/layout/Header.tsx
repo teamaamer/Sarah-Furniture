@@ -70,9 +70,9 @@ export default function Header({ collections = [] }: HeaderProps) {
             <Image
               src="/images/sarahlogo.png"
               alt={businessInfo.name}
-              width={180}
-              height={70}
-              className="h-16 w-auto object-contain"
+              width={220}
+              height={85}
+              className="h-20 w-auto object-contain"
               priority
               style={{ mixBlendMode: 'multiply' }}
             />
