@@ -54,12 +54,14 @@ export default function ReviewsPage() {
             We'd love to hear about your experience with Sarah Furniture
             Liquidation
           </p>
-          <Link
-            href="/contact"
+          <a
+            href="https://www.google.com/search?q=Sarah+Furniture+Liquidation+Atlantic+Blvd+Reviews&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOUz72athK97dgHX3bTwra3U273Ik8PCS8dxUzPRzcO2WkLKdcbhyS7J1DrWU6xmDQFHbsXFcnZNF-_vYlY_tBKABlp548c01QtpDm77Wo4swmOEVLocmkFxKwgz3pYizczePzkg%3D"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-white text-primary font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors"
           >
-            Write a Review
-          </Link>
+            Write a Review on Google
+          </a>
         </div>
       </div>
     </div>

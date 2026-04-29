@@ -19,25 +19,14 @@ export const financingPartners: FinancingPartner[] = [
     ],
   },
   {
-    id: "acima",
-    name: "Acima Leasing",
-    description: "Lease-to-own solutions for everyone",
+    id: "kafene",
+    name: "Kafene",
+    description: "Flexible lease-to-own for everyone",
     features: [
       "No credit needed",
       "Fast approval",
       "Flexible lease terms",
       "Early buyout options",
-    ],
-  },
-  {
-    id: "snap",
-    name: "Snap Finance",
-    description: "Get approved in seconds",
-    features: [
-      "Instant decisions",
-      "100-day payment option",
-      "Build your credit",
-      "Easy application process",
     ],
   },
 ];
