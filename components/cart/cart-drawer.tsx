@@ -2,6 +2,7 @@
 
 import { useCart } from './cart-provider';
 import { formatPrice } from '@/lib/shopify';
+import { HIDE_PRICES } from '@/lib/config';
 import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -88,9 +89,11 @@ export function CartDrawer() {
                     {line.merchandise.title !== 'Default Title' && (
                       <p className="text-xs text-gray-500 mt-0.5">{line.merchandise.title}</p>
                     )}
-                    <p className="text-sm font-bold text-gray-900 mt-1">
-                      {formatPrice(line.cost.totalAmount.amount, line.cost.totalAmount.currencyCode)}
-                    </p>
+                    {!HIDE_PRICES && (
+                      <p className="text-sm font-bold text-gray-900 mt-1">
+                        {formatPrice(line.cost.totalAmount.amount, line.cost.totalAmount.currencyCode)}
+                      </p>
+                    )}
                     <div className="flex items-center gap-2 mt-2">
                       <button
                         onClick={() => updateQuantity(line.id, Math.max(1, line.quantity - 1))}
@@ -127,9 +130,11 @@ export function CartDrawer() {
           <div className="border-t p-6 space-y-4 bg-white">
             <div className="flex justify-between items-center">
               <span className="text-base font-semibold text-gray-900">Subtotal</span>
-              <span className="text-xl font-bold text-gray-900">
-                {formatPrice(cart.cost.subtotalAmount.amount, cart.cost.subtotalAmount.currencyCode)}
-              </span>
+              {!HIDE_PRICES && (
+                <span className="text-xl font-bold text-gray-900">
+                  {formatPrice(cart.cost.subtotalAmount.amount, cart.cost.subtotalAmount.currencyCode)}
+                </span>
+              )}
             </div>
             <p className="text-xs text-gray-500">Shipping and taxes calculated at checkout</p>
             <Link

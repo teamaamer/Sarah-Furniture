@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShoppingCart, Check, Plus, Minus, Zap } from 'lucide-react';
 import { formatPrice } from '@/lib/shopify';
+import { HIDE_PRICES } from '@/lib/config';
 import { useCart } from '@/components/cart/cart-provider';
 import type { ShopifyProduct, ShopifyVariant } from '@/lib/shopify/types';
 
@@ -48,17 +49,19 @@ export function AddToCartButton({ product, defaultVariant, onVariantChange }: Ad
       {/* Price & Availability */}
       <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6">
         <div className="flex items-center justify-between flex-wrap gap-4">
-          <div>
-            <p className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Price</p>
-            <span className="text-3xl md:text-4xl font-bold text-gray-900">
-              {formatPrice(selectedVariant.price.amount, selectedVariant.price.currencyCode)}
-            </span>
-            {selectedVariant.compareAtPrice && parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
-              <span className="ml-3 text-lg text-gray-400 line-through">
-                {formatPrice(selectedVariant.compareAtPrice.amount, selectedVariant.compareAtPrice.currencyCode)}
+          {!HIDE_PRICES && (
+            <div>
+              <p className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Price</p>
+              <span className="text-3xl md:text-4xl font-bold text-gray-900">
+                {formatPrice(selectedVariant.price.amount, selectedVariant.price.currencyCode)}
               </span>
-            )}
-          </div>
+              {selectedVariant.compareAtPrice && parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
+                <span className="ml-3 text-lg text-gray-400 line-through">
+                  {formatPrice(selectedVariant.compareAtPrice.amount, selectedVariant.compareAtPrice.currencyCode)}
+                </span>
+              )}
+            </div>
+          )}
           {!product.availableForSale || !selectedVariant.availableForSale ? (
             <span className="bg-red-100 text-red-700 border border-red-300 px-4 py-2 rounded-full text-sm font-semibold">
               Out of Stock

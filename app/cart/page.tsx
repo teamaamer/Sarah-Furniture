@@ -2,6 +2,7 @@
 
 import { useCart } from "@/components/cart/cart-provider";
 import { formatPrice } from "@/lib/shopify";
+import { HIDE_PRICES } from "@/lib/config";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -69,9 +70,11 @@ export default function CartPage() {
                   {line.merchandise.title !== 'Default Title' && (
                     <p className="text-sm text-gray-500 mt-0.5">{line.merchandise.title}</p>
                   )}
-                  <p className="text-base font-bold text-gray-900 mt-2">
-                    {formatPrice(line.cost.totalAmount.amount, line.cost.totalAmount.currencyCode)}
-                  </p>
+                  {!HIDE_PRICES && (
+                    <p className="text-base font-bold text-gray-900 mt-2">
+                      {formatPrice(line.cost.totalAmount.amount, line.cost.totalAmount.currencyCode)}
+                    </p>
+                  )}
                   <div className="flex items-center gap-3 mt-3">
                     <div className="flex items-center gap-2 border border-gray-200 rounded-lg p-1">
                       <button
@@ -111,9 +114,11 @@ export default function CartPage() {
               <div className="space-y-3 mb-5">
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>Subtotal ({cart.totalQuantity} items)</span>
-                  <span className="font-medium text-gray-900">
-                    {formatPrice(cart.cost.subtotalAmount.amount, cart.cost.subtotalAmount.currencyCode)}
-                  </span>
+                  {!HIDE_PRICES && (
+                    <span className="font-medium text-gray-900">
+                      {formatPrice(cart.cost.subtotalAmount.amount, cart.cost.subtotalAmount.currencyCode)}
+                    </span>
+                  )}
                 </div>
                 <div className="flex justify-between text-sm text-gray-500">
                   <span>Shipping</span>
@@ -127,9 +132,11 @@ export default function CartPage() {
               <div className="border-t pt-4 mb-6">
                 <div className="flex justify-between font-bold text-gray-900 text-lg">
                   <span>Total</span>
-                  <span>
-                    {formatPrice(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}
-                  </span>
+                  {!HIDE_PRICES && (
+                    <span>
+                      {formatPrice(cart.cost.totalAmount.amount, cart.cost.totalAmount.currencyCode)}
+                    </span>
+                  )}
                 </div>
               </div>
               <button

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { formatPrice } from '@/lib/shopify';
+import { HIDE_PRICES } from '@/lib/config';
 import { useCart } from '@/components/cart/cart-provider';
 import type { ShopifyProduct } from '@/lib/shopify/types';
 
@@ -71,17 +72,19 @@ export function ProductCard({ product }: ProductCardProps) {
         </Link>
 
         <div className="mt-4 space-y-3">
-          <div>
-            {hasMultiplePrices ? (
-              <span className="text-lg font-bold text-gray-900">
-                {formatPrice(minPrice.amount, minPrice.currencyCode)} &ndash; {formatPrice(maxPrice.amount, maxPrice.currencyCode)}
-              </span>
-            ) : (
-              <span className="text-lg font-bold text-gray-900">
-                {formatPrice(minPrice.amount, minPrice.currencyCode)}
-              </span>
-            )}
-          </div>
+          {!HIDE_PRICES && (
+            <div>
+              {hasMultiplePrices ? (
+                <span className="text-lg font-bold text-gray-900">
+                  {formatPrice(minPrice.amount, minPrice.currencyCode)} &ndash; {formatPrice(maxPrice.amount, maxPrice.currencyCode)}
+                </span>
+              ) : (
+                <span className="text-lg font-bold text-gray-900">
+                  {formatPrice(minPrice.amount, minPrice.currencyCode)}
+                </span>
+              )}
+            </div>
+          )}
 
           <div className="flex gap-2">
             <Link
