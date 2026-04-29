@@ -6,13 +6,14 @@ import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import FloatingCTA from "@/components/shared/FloatingCTA";
 import { CartProvider } from "@/components/cart/cart-provider";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Sarah Furniture Liquidation - Quality Furniture 50-70% Off Retail",
-  description: "Sarah Furniture Liquidation Center offers sectionals, beds, sofa sets, outdoor furniture, and wood furniture at 50% to 70% off retail prices in Jacksonville, FL.",
+  title: "Sarah Furniture Liquidation - Quality Furniture Up to 70% Off Retail",
+  description: "Sarah Furniture Liquidation Center offers sectionals, beds, sofa sets, outdoor furniture, and wood furniture at up to 70% off retail prices in Jacksonville, FL.",
   keywords: "furniture, Jacksonville, sectionals, beds, sofa sets, outdoor furniture, wood furniture, discount furniture",
 };
 
@@ -47,13 +48,15 @@ export default function RootLayout({
         `}</Script>
       </head>
       <body className={inter.className}>
-        <CartProvider>
-          <Header />
-          <CartDrawer />
-          <main>{children}</main>
-          <Footer />
-          <FloatingCTA />
-        </CartProvider>
+        <LanguageProvider>
+          <CartProvider>
+            <Header />
+            <CartDrawer />
+            <main>{children}</main>
+            <Footer />
+            <FloatingCTA />
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

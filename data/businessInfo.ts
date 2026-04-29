@@ -4,7 +4,8 @@ export const businessInfo = {
   reviewCount: 747,
   phone: "(904) 484-8434",
   email: "Sarahfurnitureusa@gmail.com",
-  hours: "Mon - Sun | 9:00 am - 9:00 pm",
+  hoursWeekday: "9:00 AM – 9:00 PM",
+  hoursSunday: "10:00 AM – 8:00 PM",
   locations: [
     {
       id: "atlantic",
@@ -30,7 +31,7 @@ export const businessInfo = {
     "Kafene",
   ],
   brands: ["Rooms To Go", "JaxCo", "Duvall"],
-  languages: ["English"],
+  languages: ["English", "Spanish"],
   socialMedia: {
     facebook: "https://www.facebook.com/SarahFurniturejax/",
     instagram: "https://www.instagram.com/sarahfurnitureliquidation",

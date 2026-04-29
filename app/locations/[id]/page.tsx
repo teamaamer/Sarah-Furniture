@@ -50,7 +50,8 @@ export default async function LocationDetailPage({
               <h3 className="text-xl font-bold text-dark mb-4">
                 Business Hours
               </h3>
-              <p className="text-gray-700 text-lg">{businessInfo.hours}</p>
+              <p className="text-gray-700">Mon – Sat: {businessInfo.hoursWeekday}</p>
+              <p className="text-gray-700">Sun: {businessInfo.hoursSunday}</p>
             </div>
 
             <div className="bg-gray-50 p-6 rounded-lg">

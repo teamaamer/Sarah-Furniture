@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import { businessInfo, navigation } from "@/data/businessInfo";
 import { useCart } from "@/components/cart/cart-provider";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { ShopifyCollection } from "@/lib/shopify/types";
 
 interface HeaderProps {
@@ -16,6 +17,17 @@ export default function Header({ collections = [] }: HeaderProps) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { cart, openCart } = useCart();
+  const { language, setLanguage, t } = useLanguage();
+
+  const navLabel: Record<string, string> = {
+    Home: t.nav.home,
+    Categories: t.nav.categories,
+    Reviews: t.nav.reviews,
+    About: t.nav.about,
+    Locations: t.nav.locations,
+    'Financing & Leasing': t.nav.financing,
+    'Request a Call Back': t.nav.contact,
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
@@ -26,12 +38,29 @@ export default function Header({ collections = [] }: HeaderProps) {
             <div className="text-gray-500">
               {businessInfo.locations[0].fullAddress}
             </div>
-<a
-              href={`tel:${businessInfo.phone}`}
-              className="text-gray-900 font-medium hover:text-primary transition-colors"
-            >
-              {businessInfo.phone}
-            </a>
+<div className="flex items-center gap-3">
+              <div className="flex items-center gap-1 border border-gray-200 rounded-full px-2 py-0.5">
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`text-xs font-semibold px-1.5 py-0.5 rounded-full transition-colors ${language === 'en' ? 'bg-primary text-white' : 'text-gray-500 hover:text-gray-900'}`}
+                >
+                  EN
+                </button>
+                <span className="text-gray-300 text-xs">|</span>
+                <button
+                  onClick={() => setLanguage('es')}
+                  className={`text-xs font-semibold px-1.5 py-0.5 rounded-full transition-colors ${language === 'es' ? 'bg-primary text-white' : 'text-gray-500 hover:text-gray-900'}`}
+                >
+                  ES
+                </button>
+              </div>
+              <a
+                href={`tel:${businessInfo.phone}`}
+                className="text-gray-900 font-medium hover:text-primary transition-colors"
+              >
+                {businessInfo.phone}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -65,7 +94,7 @@ export default function Header({ collections = [] }: HeaderProps) {
                   href={item.href}
                   className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1"
                 >
-                  {item.name}
+                  {navLabel[item.name] ?? item.name}
                   {item.name === "Categories" && collections.length > 0 && (
                     <svg className="w-3 h-3 mt-0.5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" stroke="currentColor">
                       <path d="M19 9l-7 7-7-7" />
@@ -80,8 +109,8 @@ export default function Header({ collections = [] }: HeaderProps) {
                       href="/products"
                       className="block px-4 py-2.5 text-sm font-semibold text-gray-900 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-100 mb-1"
                     >
-                      All Products
-                    </Link>
+                      {t.nav.allProducts}
+</Link>
                     {collections.map((col) => (
                       <Link
                         key={col.id}
@@ -133,7 +162,7 @@ export default function Header({ collections = [] }: HeaderProps) {
               <svg className="w-4 h-4" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              Call Now
+              {t.nav.callNow}
             </a>
           </div>
 
@@ -179,7 +208,7 @@ export default function Header({ collections = [] }: HeaderProps) {
                   className="block py-2.5 text-sm font-medium text-gray-700 hover:text-primary"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  {item.name}
+                  {navLabel[item.name] ?? item.name}
                 </Link>
                 {/* Dynamic collections under Categories */}
                 {item.name === "Categories" && collections.length > 0 && (
@@ -220,7 +249,7 @@ export default function Header({ collections = [] }: HeaderProps) {
               <svg className="w-4 h-4" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              Call Now
+              {t.nav.callNow}
             </a>
           </div>
         )}

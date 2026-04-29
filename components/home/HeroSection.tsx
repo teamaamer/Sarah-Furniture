@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (videoRef.current) {
@@ -35,23 +37,21 @@ export default function HeroSection() {
         <div className="mb-4">
           <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-white/80 border border-white/20 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            Premium Furniture Store
+            {t.hero.badge}
           </span>
         </div>
 
         {/* Headline */}
         <h1 className="text-5xl sm:text-6xl lg:text-8xl font-extrabold text-white leading-[1.05] tracking-tight mb-6 max-w-4xl">
-          Furnish Your<br />
+          {t.hero.headline1}<br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-red-400">
-            Dream Space
+            {t.hero.headline2}
           </span>
         </h1>
 
         {/* Subtext */}
         <p className="text-base lg:text-xl text-white/70 font-light max-w-xl mb-8 leading-relaxed">
-          Premium sectionals, beds & sofa sets from trusted brands — up to{" "}
-          <span className="text-white font-semibold">70% off</span> retail.
-          Same-day delivery available.
+          {t.hero.subtext}
         </p>
 
         {/* CTA Buttons */}
@@ -60,7 +60,7 @@ export default function HeroSection() {
             href="/products"
             className="inline-flex items-center justify-center gap-2 bg-primary text-white px-9 py-4 rounded-md text-base font-semibold hover:bg-red-700 transition-all duration-300 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02]"
           >
-            Shop Now
+            {t.hero.shopNow}
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
@@ -69,16 +69,16 @@ export default function HeroSection() {
             href="/locations"
             className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white border border-white/25 px-9 py-4 rounded-md text-base font-semibold hover:bg-white/20 transition-all duration-300 hover:scale-[1.02]"
           >
-            Visit Our Store
+            {t.hero.visitStore}
           </Link>
         </div>
 
         {/* Stats Row */}
         <div className="mt-6 flex flex-wrap justify-center gap-6 w-full">
           {[
-            { value: "5,000+", label: "Products" },
-            { value: "70%", label: "Off Retail" },
-            { value: "Same Day", label: "Delivery" },
+            { value: '5,000+', label: t.hero.productsLabel },
+            { value: t.hero.offRetailValue, label: t.hero.offRetailLabel },
+            { value: t.hero.sameDayValue, label: t.hero.sameDayLabel },
           ].map(({ value, label }) => (
             <div key={label}>
               <div className="text-2xl font-bold text-white">{value}</div>

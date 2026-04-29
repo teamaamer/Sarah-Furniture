@@ -41,7 +41,8 @@ export default function LocationsPage() {
 
         <div className="mt-12 bg-gray-50 p-8 rounded-lg text-center">
           <h3 className="text-2xl font-bold text-dark mb-4">Business Hours</h3>
-          <p className="text-xl text-gray-700 mb-6">{businessInfo.hours}</p>
+          <p className="text-gray-700">Mon – Sat: {businessInfo.hoursWeekday}</p>
+          <p className="text-gray-700 mb-6">Sun: {businessInfo.hoursSunday}</p>
           <p className="text-gray-600">
             Call us at{" "}
             <a

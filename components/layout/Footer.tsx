@@ -1,7 +1,12 @@
+'use client';
+
 import Link from "next/link";
 import { businessInfo } from "@/data/businessInfo";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-dark text-white">
       <div className="container-custom py-12">
@@ -9,7 +14,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-4">{businessInfo.name}</h3>
             <p className="text-gray-300 text-sm mb-4">
-              Quality furniture at 50-70% off retail prices in Jacksonville, FL.
+              {t.footer.tagline}
             </p>
             <div className="flex gap-4">
               <a
@@ -34,7 +39,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Locations</h4>
+            <h4 className="text-lg font-semibold mb-4">{t.footer.locations}</h4>
             <ul className="space-y-2 text-sm text-gray-300">
               {businessInfo.locations.map((location) => (
                 <li key={location.id}>
@@ -50,50 +55,53 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4">{t.footer.quickLinks}</h4>
             <ul className="space-y-2 text-sm text-gray-300">
               <li>
                 <Link href="/products" className="hover:text-white transition-colors">
-                  Furniture Products
+                  {t.footer.furnitureProducts}
                 </Link>
               </li>
               <li>
                 <Link href="/reviews" className="hover:text-white transition-colors">
-                  Reviews
+                  {t.footer.reviews}
                 </Link>
               </li>
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
-                  About Us
+                  {t.footer.aboutUs}
                 </Link>
               </li>
               <li>
                 <Link href="/financing" className="hover:text-white transition-colors">
-                  Financing & Leasing
+                  {t.footer.financing}
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="hover:text-white transition-colors">
-                  Contact Us
+                  {t.footer.contactUs}
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Business Hours</h4>
-            <p className="text-sm text-gray-300 mb-4">{businessInfo.hours}</p>
-            <h4 className="text-lg font-semibold mb-2">Contact</h4>
+            <h4 className="text-lg font-semibold mb-4">{t.footer.businessHours}</h4>
+            <div className="text-sm text-gray-300 mb-4 space-y-1">
+              <p><span className="text-white font-medium">{t.footer.monSat}:</span> {businessInfo.hoursWeekday}</p>
+              <p><span className="text-white font-medium">{t.footer.sun}:</span> {businessInfo.hoursSunday}</p>
+            </div>
+            <h4 className="text-lg font-semibold mb-2">{t.footer.contact}</h4>
             <div className="space-y-2">
               <a
                 href={`tel:${businessInfo.phone}`}
-                className="block text-primary hover:text-primary-light transition-colors text-sm"
+                className="block text-primary hover:text-red-400 transition-colors text-sm"
               >
                 {businessInfo.phone}
               </a>
               <a
                 href={`mailto:${businessInfo.email}`}
-                className="block text-primary hover:text-primary-light transition-colors text-sm"
+                className="block text-primary hover:text-red-400 transition-colors text-sm"
               >
                 {businessInfo.email}
               </a>
@@ -103,8 +111,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
           <p>
-            &copy; {new Date().getFullYear()} {businessInfo.name}. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} {businessInfo.name}. {t.footer.rights}
           </p>
         </div>
       </div>

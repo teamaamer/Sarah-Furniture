@@ -13,7 +13,7 @@ export default function AboutPage() {
         <div className="prose max-w-none mb-12">
           <p className="text-lg text-gray-700 mb-6">
             Sarah Furniture Liquidation Center offers sectionals, beds, sofa
-            sets, outdoor furniture, and wood furniture at 50% to 70% off retail
+            sets, outdoor furniture, and wood furniture at up to 70% off retail
             prices in Jacksonville, FL.
           </p>
           <p className="text-lg text-gray-700">
@@ -54,7 +54,8 @@ export default function AboutPage() {
             <h3 className="text-2xl font-bold text-dark mb-4">
               Business Hours
             </h3>
-            <p className="text-gray-700 text-lg">{businessInfo.hours}</p>
+            <p className="text-gray-700">Mon – Sat: {businessInfo.hoursWeekday}</p>
+            <p className="text-gray-700">Sun: {businessInfo.hoursSunday}</p>
           </div>
 
           <div className="bg-gray-50 p-8 rounded-lg">
@@ -66,16 +67,7 @@ export default function AboutPage() {
             </ul>
           </div>
 
-          <div className="bg-gray-50 p-8 rounded-lg">
-            <h3 className="text-2xl font-bold text-dark mb-4">Brands</h3>
-            <ul className="space-y-2 text-gray-700">
-              {businessInfo.brands.map((brand) => (
-                <li key={brand}>• {brand}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-gray-50 p-8 rounded-lg">
+<div className="bg-gray-50 p-8 rounded-lg">
             <h3 className="text-2xl font-bold text-dark mb-4">
               Payment Options
             </h3>
