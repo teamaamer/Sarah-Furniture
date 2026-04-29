@@ -40,9 +40,9 @@ export default function HeroSection() {
           <Image
             src="/images/sarahlogo.png"
             alt={businessInfo.name}
-            width={260}
-            height={100}
-            className="h-24 w-auto object-contain drop-shadow-2xl"
+            width={500}
+            height={200}
+            className="h-44 w-auto object-contain drop-shadow-2xl"
             priority
           />
         </div>
