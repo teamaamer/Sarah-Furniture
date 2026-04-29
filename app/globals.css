@@ -3,15 +3,23 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply text-gray-900 antialiased;
     font-feature-settings: 'kern' 1, 'liga' 1;
     letter-spacing: -0.01em;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold;
     letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    @apply bg-primary text-white;
   }
 }
 
@@ -21,13 +29,24 @@
   }
 
   .btn-primary {
-    @apply bg-primary text-white font-medium py-4 px-10 rounded-md hover:bg-red-700 transition-all duration-300 shadow-md hover:shadow-xl;
+    @apply bg-primary text-white font-semibold py-4 px-10 rounded-md
+           hover:bg-red-700 active:scale-95
+           transition-all duration-300
+           shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30;
     letter-spacing: 0.02em;
   }
 
   .btn-secondary {
-    @apply bg-white border border-gray-900 text-gray-900 font-medium py-4 px-10 rounded-md hover:bg-gray-900 hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg;
+    @apply bg-white border border-gray-900 text-gray-900 font-semibold py-4 px-10 rounded-md
+           hover:bg-gray-900 hover:text-white active:scale-95
+           transition-all duration-300
+           shadow-sm hover:shadow-lg;
     letter-spacing: 0.02em;
+  }
+
+  /* Luxury section divider */
+  .section-divider {
+    @apply w-12 h-0.5 bg-primary rounded-full;
   }
 
   .fade-in {
@@ -48,50 +67,31 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.8; }
 }
 
 @keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Smooth image loading */
+img {
+  transition: opacity 0.3s ease;
 }
