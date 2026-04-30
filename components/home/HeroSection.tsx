@@ -36,13 +36,13 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative h-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center justify-center text-center">
         {/* Logo Badge */}
-        <div className="mb-6">
+        <div className="mb-6 bg-white/15 backdrop-blur-md border border-white/20 rounded-3xl px-10 py-6 shadow-2xl">
           <Image
             src="/images/sarahlogo.png"
             alt={businessInfo.name}
-            width={500}
-            height={200}
-            className="h-44 w-auto object-contain drop-shadow-2xl"
+            width={600}
+            height={230}
+            className="h-52 w-auto object-contain drop-shadow-xl brightness-0 invert"
             priority
           />
         </div>
