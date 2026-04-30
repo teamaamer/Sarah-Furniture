@@ -42,7 +42,7 @@ export default function HeroSection() {
             alt={businessInfo.name}
             width={600}
             height={230}
-            className="h-52 w-auto object-contain drop-shadow-xl brightness-0 invert"
+            className="h-52 w-auto object-contain drop-shadow-xl"
             priority
           />
         </div>
