@@ -36,7 +36,7 @@ export default function Header({ collections = [] }: HeaderProps) {
               {businessInfo.locations[0].fullAddress}
             </div>
 <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1 border border-gray-200 rounded-full px-2 py-0.5">
+              <div className="hidden lg:flex items-center gap-1 border border-gray-200 rounded-full px-2 py-0.5">
                 <button
                   onClick={() => setLanguage('en')}
                   className={`text-xs font-semibold px-1.5 py-0.5 rounded-full transition-colors ${language === 'en' ? 'bg-primary text-white' : 'text-gray-500 hover:text-gray-900'}`}
@@ -151,20 +151,37 @@ export default function Header({ collections = [] }: HeaderProps) {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-gray-700"
-            aria-label="Toggle menu"
-          >
-            <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-              {mobileMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+          {/* Mobile: Language Switcher + Hamburger */}
+          <div className="lg:hidden flex items-center gap-2">
+            <div className="flex items-center gap-1 border border-gray-200 rounded-full px-2 py-0.5">
+              <button
+                onClick={() => setLanguage('en')}
+                className={`text-xs font-semibold px-1.5 py-0.5 rounded-full transition-colors ${language === 'en' ? 'bg-primary text-white' : 'text-gray-500 hover:text-gray-900'}`}
+              >
+                EN
+              </button>
+              <span className="text-gray-300 text-xs">|</span>
+              <button
+                onClick={() => setLanguage('es')}
+                className={`text-xs font-semibold px-1.5 py-0.5 rounded-full transition-colors ${language === 'es' ? 'bg-primary text-white' : 'text-gray-500 hover:text-gray-900'}`}
+              >
+                ES
+              </button>
+            </div>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-gray-700"
+              aria-label="Toggle menu"
+            >
+              <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                {mobileMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
