@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import SectionTitle from "@/components/shared/SectionTitle";
 import { businessInfo } from "@/data/businessInfo";
 
 export default function ContactPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -36,9 +38,9 @@ ${formData.message || "No message provided"}
     
     // Open email client
     window.location.href = mailtoLink;
-    
-    // Show confirmation
-    alert("Thank you! Your email client will open. Please send the email to complete your request.");
+
+    // Show confirmation page (fires the Google Ads lead conversion)
+    router.push("/contact/thank-you");
   };
 
   const handleChange = (
