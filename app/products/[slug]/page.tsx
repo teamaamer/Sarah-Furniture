@@ -85,7 +85,7 @@ export default async function ProductPage({
             </div>
             <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-purple-50 border border-purple-100">
               <RotateCcw className="h-5 w-5 text-purple-600" />
-              <span className="text-xs font-semibold text-purple-900 text-center">Easy Returns</span>
+              <span className="text-xs font-semibold text-purple-900 text-center">Call to Confirm Availability</span>
             </div>
           </div>
 
