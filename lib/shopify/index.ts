@@ -1,4 +1,4 @@
-import client from './client';
+import client, { isShopifyConfigured } from './client';
 import {
   GET_COLLECTION_QUERY,
   GET_ALL_COLLECTIONS_QUERY,
@@ -14,9 +14,17 @@ import {
 } from './queries';
 import type { ShopifyProduct, ShopifyCollection, ShopifyCart } from './types';
 
+// Skip API calls (and the resulting error logs) until real credentials are set
+async function shopifyRequest(
+  ...args: Parameters<typeof client.request>
+): Promise<{ data?: any; errors?: any }> {
+  if (!isShopifyConfigured) return {};
+  return client.request(...args);
+}
+
 export async function getCollection(handle: string): Promise<ShopifyCollection | null> {
   try {
-    const { data, errors } = await client.request(GET_COLLECTION_QUERY, {
+    const { data, errors } = await shopifyRequest(GET_COLLECTION_QUERY, {
       variables: { handle },
     });
     if (errors) {
@@ -32,7 +40,7 @@ export async function getCollection(handle: string): Promise<ShopifyCollection |
 
 export async function getAllCollections(first: number = 10): Promise<ShopifyCollection[]> {
   try {
-    const { data, errors } = await client.request(GET_ALL_COLLECTIONS_QUERY, {
+    const { data, errors } = await shopifyRequest(GET_ALL_COLLECTIONS_QUERY, {
       variables: { first },
     });
     if (errors) {
@@ -51,7 +59,7 @@ export async function getCollectionsWithProducts(
   productsFirst: number = 8
 ): Promise<ShopifyCollection[]> {
   try {
-    const { data, errors } = await client.request(GET_COLLECTIONS_WITH_PRODUCTS_QUERY, {
+    const { data, errors } = await shopifyRequest(GET_COLLECTIONS_WITH_PRODUCTS_QUERY, {
       variables: { first, productsFirst },
     });
     if (errors) {
@@ -67,7 +75,7 @@ export async function getCollectionsWithProducts(
 
 export async function getProduct(handle: string): Promise<ShopifyProduct | null> {
   try {
-    const { data, errors } = await client.request(GET_PRODUCT_QUERY, {
+    const { data, errors } = await shopifyRequest(GET_PRODUCT_QUERY, {
       variables: { handle },
     });
     if (errors) {
@@ -83,7 +91,7 @@ export async function getProduct(handle: string): Promise<ShopifyProduct | null>
 
 export async function getProducts(query?: string, first: number = 20): Promise<ShopifyProduct[]> {
   try {
-    const { data, errors } = await client.request(GET_PRODUCTS_QUERY, {
+    const { data, errors } = await shopifyRequest(GET_PRODUCTS_QUERY, {
       variables: { first, query },
     });
     if (errors) {
@@ -99,7 +107,7 @@ export async function getProducts(query?: string, first: number = 20): Promise<S
 
 export async function searchProducts(query: string, first: number = 20): Promise<ShopifyProduct[]> {
   try {
-    const { data, errors } = await client.request(SEARCH_PRODUCTS_QUERY, {
+    const { data, errors } = await shopifyRequest(SEARCH_PRODUCTS_QUERY, {
       variables: { query, first },
     });
     if (errors) {
@@ -115,7 +123,7 @@ export async function searchProducts(query: string, first: number = 20): Promise
 
 export async function createCart(): Promise<ShopifyCart | null> {
   try {
-    const { data, errors } = await client.request(CREATE_CART_MUTATION, {
+    const { data, errors } = await shopifyRequest(CREATE_CART_MUTATION, {
       variables: { input: {} },
     });
     if (errors || data?.cartCreate?.userErrors?.length > 0) {
@@ -135,7 +143,7 @@ export async function addToCart(
   quantity: number = 1
 ): Promise<ShopifyCart | null> {
   try {
-    const { data, errors } = await client.request(ADD_TO_CART_MUTATION, {
+    const { data, errors } = await shopifyRequest(ADD_TO_CART_MUTATION, {
       variables: { cartId, lines: [{ merchandiseId, quantity }] },
     });
     if (errors || data?.cartLinesAdd?.userErrors?.length > 0) {
@@ -155,7 +163,7 @@ export async function updateCartLine(
   quantity: number
 ): Promise<ShopifyCart | null> {
   try {
-    const { data, errors } = await client.request(UPDATE_CART_MUTATION, {
+    const { data, errors } = await shopifyRequest(UPDATE_CART_MUTATION, {
       variables: { cartId, lines: [{ id: lineId, quantity }] },
     });
     if (errors || data?.cartLinesUpdate?.userErrors?.length > 0) {
@@ -174,7 +182,7 @@ export async function removeFromCart(
   lineIds: string[]
 ): Promise<ShopifyCart | null> {
   try {
-    const { data, errors } = await client.request(REMOVE_FROM_CART_MUTATION, {
+    const { data, errors } = await shopifyRequest(REMOVE_FROM_CART_MUTATION, {
       variables: { cartId, lineIds },
     });
     if (errors || data?.cartLinesRemove?.userErrors?.length > 0) {
@@ -190,7 +198,7 @@ export async function removeFromCart(
 
 export async function getCart(cartId: string): Promise<ShopifyCart | null> {
   try {
-    const { data, errors } = await client.request(GET_CART_QUERY, {
+    const { data, errors } = await shopifyRequest(GET_CART_QUERY, {
       variables: { cartId },
     });
     if (errors) {

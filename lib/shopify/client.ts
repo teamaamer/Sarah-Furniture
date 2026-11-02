@@ -17,4 +17,10 @@ const client = createStorefrontApiClient({
   publicAccessToken: accessToken || 'demo-token',
 });
 
+export const isShopifyConfigured =
+  !!storeDomain &&
+  storeDomain !== 'your-store.myshopify.com' &&
+  !!accessToken &&
+  accessToken !== 'YOUR_STOREFRONT_ACCESS_TOKEN_HERE';
+
 export default client;
