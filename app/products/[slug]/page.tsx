@@ -1,14 +1,11 @@
-import { getProduct, getCategory } from "@/lib/catalog";
-import { products } from "@/data/products";
+import { getProduct } from "@/lib/shopify";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ProductClientWrapper } from "@/components/products/product-client-wrapper";
 import { ChevronRight, Truck, ShieldCheck, RotateCcw } from "lucide-react";
 
-export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
-}
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
@@ -16,10 +13,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProduct(slug);
   if (!product) return {};
   return {
-    title: `${product.name} | Sarah Furniture Liquidation`,
+    title: `${product.title} | Sarah Furniture Liquidation`,
     description: product.description,
   };
 }
@@ -30,13 +27,16 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProduct(slug);
 
   if (!product) {
     notFound();
   }
 
-  const category = getCategory(product.category);
+  const images = product.images.edges.map((edge) => edge.node);
+  const variants = product.variants.edges.map((edge) => edge.node);
+  const defaultVariant = variants[0];
+  const collections = product.collections.edges.map((e) => e.node);
 
   return (
     <div className="min-h-screen bg-white">
@@ -50,24 +50,29 @@ export default async function ProductPage({
           <Link href="/products" className="hover:text-gray-900 transition-colors">
             Products
           </Link>
-          {category && (
+          {collections[0] && (
             <>
               <ChevronRight className="h-4 w-4" />
               <Link
-                href={`/collections/${category.slug}`}
+                href={`/collections/${collections[0].handle}`}
                 className="hover:text-gray-900 transition-colors"
               >
-                {category.name}
+                {collections[0].title}
               </Link>
             </>
           )}
           <ChevronRight className="h-4 w-4" />
           <span className="text-gray-900 font-medium truncate max-w-[200px]">
-            {product.name}
+            {product.title}
           </span>
         </nav>
 
-        <ProductClientWrapper product={product}>
+        <ProductClientWrapper
+          product={product}
+          images={images}
+          variants={variants}
+          defaultVariant={defaultVariant}
+        >
           {/* Trust Badges */}
           <div className="grid grid-cols-3 gap-3 mt-6">
             <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-blue-50 border border-blue-100">
@@ -84,8 +89,19 @@ export default async function ProductPage({
             </div>
           </div>
 
+          {/* Description */}
+          {product.descriptionHtml && (
+            <div className="mt-6 bg-gray-50 rounded-2xl p-6">
+              <h2 className="text-base font-semibold text-gray-900 mb-3">Product Details</h2>
+              <div
+                className="prose prose-sm max-w-none text-gray-600"
+                dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+              />
+            </div>
+          )}
+
           {/* Tags */}
-          {product.tags && product.tags.length > 0 && (
+          {product.tags.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
               {product.tags.map((tag) => (
                 <span

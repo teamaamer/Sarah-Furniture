@@ -5,13 +5,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { businessInfo, navigation } from "@/data/businessInfo";
 import { useLanguage } from "@/contexts/LanguageContext";
-import type { ProductCategory } from "@/data/products";
+import type { ShopifyCollection } from "@/lib/shopify/types";
 
 interface HeaderProps {
-  categories?: ProductCategory[];
+  collections?: ShopifyCollection[];
 }
 
-export default function Header({ categories = [] }: HeaderProps) {
+export default function Header({ collections = [] }: HeaderProps) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
@@ -92,7 +92,7 @@ export default function Header({ categories = [] }: HeaderProps) {
                   className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1"
                 >
                   {navLabel[item.name] ?? item.name}
-                  {item.name === "Categories" && categories.length > 0 && (
+                  {item.name === "Categories" && collections.length > 0 && (
                     <svg className="w-3 h-3 mt-0.5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" viewBox="0 0 24 24" stroke="currentColor">
                       <path d="M19 9l-7 7-7-7" />
                     </svg>
@@ -100,7 +100,7 @@ export default function Header({ categories = [] }: HeaderProps) {
                 </Link>
 
                 {/* Dynamic Categories Dropdown */}
-                {item.name === "Categories" && activeDropdown === item.name && categories.length > 0 && (
+                {item.name === "Categories" && activeDropdown === item.name && collections.length > 0 && (
                   <div className="absolute left-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
                     <Link
                       href="/products"
@@ -108,13 +108,13 @@ export default function Header({ categories = [] }: HeaderProps) {
                     >
                       {t.nav.allProducts}
 </Link>
-                    {categories.map((col) => (
+                    {collections.map((col) => (
                       <Link
                         key={col.id}
-                        href={`/collections/${col.slug}`}
+                        href={`/collections/${col.handle}`}
                         className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors"
                       >
-                        {col.name}
+                        {col.title}
                       </Link>
                     ))}
                   </div>
@@ -196,17 +196,17 @@ export default function Header({ categories = [] }: HeaderProps) {
                 >
                   {navLabel[item.name] ?? item.name}
                 </Link>
-                {/* Categories */}
-                {item.name === "Categories" && categories.length > 0 && (
+                {/* Dynamic collections under Categories */}
+                {item.name === "Categories" && collections.length > 0 && (
                   <div className="pl-4 space-y-1">
-                    {categories.map((col) => (
+                    {collections.map((col) => (
                       <Link
                         key={col.id}
-                        href={`/collections/${col.slug}`}
+                        href={`/collections/${col.handle}`}
                         className="block py-2 text-sm text-gray-600 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        {col.name}
+                        {col.title}
                       </Link>
                     ))}
                   </div>

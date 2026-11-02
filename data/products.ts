@@ -126,31 +126,3 @@ export const productCategories: ProductCategory[] = [
     image: "/images/sarah13.jpeg",
   },
 ];
-
-export interface Product {
-  slug: string;
-  name: string;
-  /** Slug of a category in productCategories */
-  category: string;
-  description: string;
-  /** Paths under /public, e.g. "/images/products/grey-sectional-1.jpg" */
-  images: string[];
-  price?: number;
-  compareAtPrice?: number;
-  inStock: boolean;
-  tags?: string[];
-}
-
-// Add products here. Example:
-// {
-//   slug: "grey-modular-sectional",
-//   name: "Grey Modular Sectional",
-//   category: "sectionals",
-//   description: "6-piece modular sectional with chaise.",
-//   images: ["/images/products/grey-modular-sectional-1.jpg"],
-//   price: 899,
-//   compareAtPrice: 2499,
-//   inStock: true,
-//   tags: ["Modular", "Grey"],
-// },
-export const products: Product[] = [];

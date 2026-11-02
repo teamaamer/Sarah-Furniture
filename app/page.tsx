@@ -4,15 +4,15 @@ import FeaturesSection from "@/components/home/FeaturesSection";
 import FacebookFeed from "@/components/home/FacebookFeed";
 import InstagramFeed from "@/components/home/InstagramFeed";
 import AnimateOnScroll from "@/components/shared/AnimateOnScroll";
-import { getCategories } from "@/lib/catalog";
+import { getAllCollections } from "@/lib/shopify";
 
-export default function Home() {
-  const categories = getCategories();
+export default async function Home() {
+  const collections = await getAllCollections(8);
 
   return (
     <>
       <HeroSection />
-      <CategoriesSection categories={categories} />
+      {collections.length > 0 && <CategoriesSection collections={collections} />}
       <FeaturesSection />
       <AnimateOnScroll><FacebookFeed /></AnimateOnScroll>
       <AnimateOnScroll delay={0.1}><InstagramFeed /></AnimateOnScroll>
