@@ -1,27 +1,16 @@
-'use client';
-
-import { useState } from 'react';
 import Link from 'next/link';
-import { formatPrice } from '@/lib/shopify';
+import { formatPrice } from '@/lib/catalog';
 import { HIDE_PRICES } from '@/lib/config';
 import { businessInfo } from '@/data/businessInfo';
-import type { ShopifyProduct, ShopifyVariant } from '@/lib/shopify/types';
+import type { Product } from '@/data/products';
 
-interface AddToCartButtonProps {
-  product: ShopifyProduct;
-  defaultVariant: ShopifyVariant;
-  onVariantChange?: (variantId: string) => void;
-}
-
-export function AddToCartButton({ product, defaultVariant, onVariantChange }: AddToCartButtonProps) {
-  const [selectedVariant, setSelectedVariant] = useState(defaultVariant);
-
+export function ProductInfo({ product }: { product: Product }) {
   return (
     <div className="space-y-6">
       {/* Title */}
       <div>
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-3">
-          {product.title}
+          {product.name}
         </h1>
         {product.description && (
           <p className="text-gray-600 text-base leading-relaxed">{product.description}</p>
@@ -31,63 +20,30 @@ export function AddToCartButton({ product, defaultVariant, onVariantChange }: Ad
       {/* Price & Availability */}
       <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6">
         <div className="flex items-center justify-between flex-wrap gap-4">
-          {!HIDE_PRICES && (
+          {!HIDE_PRICES && product.price !== undefined && (
             <div>
               <p className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Price</p>
               <span className="text-3xl md:text-4xl font-bold text-gray-900">
-                {formatPrice(selectedVariant.price.amount, selectedVariant.price.currencyCode)}
+                {formatPrice(product.price)}
               </span>
-              {selectedVariant.compareAtPrice && parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
+              {product.compareAtPrice && product.compareAtPrice > product.price && (
                 <span className="ml-3 text-lg text-gray-400 line-through">
-                  {formatPrice(selectedVariant.compareAtPrice.amount, selectedVariant.compareAtPrice.currencyCode)}
+                  {formatPrice(product.compareAtPrice)}
                 </span>
               )}
             </div>
           )}
-          {!product.availableForSale || !selectedVariant.availableForSale ? (
-            <span className="bg-red-100 text-red-700 border border-red-300 px-4 py-2 rounded-full text-sm font-semibold">
-              Out of Stock
-            </span>
-          ) : selectedVariant.quantityAvailable && selectedVariant.quantityAvailable <= 5 ? (
-            <span className="bg-yellow-100 text-yellow-700 border border-yellow-300 px-4 py-2 rounded-full text-sm font-semibold">
-              Only {selectedVariant.quantityAvailable} left!
-            </span>
-          ) : (
+          {product.inStock ? (
             <span className="bg-green-100 text-green-700 border border-green-300 px-4 py-2 rounded-full text-sm font-semibold">
               ✓ In Stock
+            </span>
+          ) : (
+            <span className="bg-red-100 text-red-700 border border-red-300 px-4 py-2 rounded-full text-sm font-semibold">
+              Out of Stock
             </span>
           )}
         </div>
       </div>
-
-      {/* Variant Selector */}
-      {product.variants.edges.length > 1 && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-5">
-          <label className="block text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
-            Select Option
-          </label>
-          <div className="flex gap-2 flex-wrap">
-            {product.variants.edges.map(({ node: variant }) => (
-              <button
-                key={variant.id}
-                type="button"
-                onClick={() => {
-                  setSelectedVariant(variant);
-                  onVariantChange?.(variant.id);
-                }}
-                disabled={!variant.availableForSale}
-                className={`px-4 py-2.5 rounded-xl font-medium transition-all border-2 text-sm ${
-                  selectedVariant.id === variant.id
-                    ? 'bg-gray-900 text-white border-gray-900'
-                    : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed'
-                }`}
-              >
-                {variant.title}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* In-Store Notice */}
       <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4">

@@ -4,11 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import type { ShopifyCollection } from "@/lib/shopify/types";
+import type { ProductCategory } from "@/data/products";
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-export default function CategoriesSection({ collections }: { collections: ShopifyCollection[] }) {
+export default function CategoriesSection({ categories }: { categories: ProductCategory[] }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -27,22 +27,22 @@ export default function CategoriesSection({ collections }: { collections: Shopif
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-          {collections.map((collection, i) => (
+          {categories.map((category, i) => (
             <motion.div
-              key={collection.id}
+              key={category.id}
               initial={{ opacity: 0, y: 40 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.07, ease }}
             >
               <Link
-                href={`/collections/${collection.handle}`}
+                href={`/collections/${category.slug}`}
                 className="group block relative rounded-2xl overflow-hidden bg-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
               >
                 <div className="relative h-48 lg:h-56 overflow-hidden">
-                  {collection.image ? (
+                  {category.image ? (
                     <Image
-                      src={collection.image.url}
-                      alt={collection.image.altText || collection.title}
+                      src={category.image}
+                      alt={category.name}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />
@@ -54,7 +54,7 @@ export default function CategoriesSection({ collections }: { collections: Shopif
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <h3 className="font-bold text-white text-sm lg:text-base leading-tight drop-shadow">
-                      {collection.title}
+                      {category.name}
                     </h3>
                     <p className="text-white/70 text-xs mt-1 flex items-center gap-1 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                       Shop Now

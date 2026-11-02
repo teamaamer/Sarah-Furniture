@@ -1,7 +1,6 @@
-import { getAllCollections } from "@/lib/shopify";
+import { getCategories } from "@/lib/catalog";
 import Header from "./Header";
 
-export default async function HeaderServer() {
-  const collections = await getAllCollections(20);
-  return <Header collections={collections} />;
+export default function HeaderServer() {
+  return <Header categories={getCategories()} />;
 }

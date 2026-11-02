@@ -9,8 +9,6 @@ interface ProductGalleryProps {
   images: Array<{
     url: string;
     altText: string | null;
-    width: number;
-    height: number;
   }>;
   productTitle: string;
   selectedImageIndex?: number;

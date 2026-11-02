@@ -1,16 +1,12 @@
-import { getProducts, getAllCollections } from "@/lib/shopify";
+import { getProducts, getCategories } from "@/lib/catalog";
 import { ProductCard } from "@/components/products/product-card";
 import SectionTitle from "@/components/shared/SectionTitle";
+import { businessInfo } from "@/data/businessInfo";
 import Link from "next/link";
-import Image from "next/image";
 
-export const revalidate = 60;
-
-export default async function ProductsPage() {
-  const [products, collections] = await Promise.all([
-    getProducts(undefined, 24),
-    getAllCollections(12),
-  ]);
+export default function ProductsPage() {
+  const products = getProducts();
+  const categories = getCategories();
 
   return (
     <div className="py-16 bg-white min-h-screen">
@@ -21,42 +17,40 @@ export default async function ProductsPage() {
           centered
         />
 
-        {/* Collections Filter */}
-        {collections.length > 0 && (
-          <div className="flex gap-3 overflow-x-auto pb-4 mb-12 justify-center flex-wrap">
+        {/* Categories Filter */}
+        <div className="flex gap-3 overflow-x-auto pb-4 mb-12 justify-center flex-wrap">
+          <Link
+            href="/products"
+            className="flex-shrink-0 px-5 py-2 rounded-full border-2 border-gray-900 bg-gray-900 text-white text-sm font-medium transition-colors"
+          >
+            All Products
+          </Link>
+          {categories.map((category) => (
             <Link
-              href="/products"
-              className="flex-shrink-0 px-5 py-2 rounded-full border-2 border-gray-900 bg-gray-900 text-white text-sm font-medium transition-colors"
+              key={category.id}
+              href={`/collections/${category.slug}`}
+              className="flex-shrink-0 px-5 py-2 rounded-full border-2 border-gray-200 text-gray-700 text-sm font-medium hover:border-gray-900 hover:bg-gray-900 hover:text-white transition-colors"
             >
-              All Products
+              {category.name}
             </Link>
-            {collections.map((collection) => (
-              <Link
-                key={collection.id}
-                href={`/collections/${collection.handle}`}
-                className="flex-shrink-0 px-5 py-2 rounded-full border-2 border-gray-200 text-gray-700 text-sm font-medium hover:border-gray-900 hover:bg-gray-900 hover:text-white transition-colors"
-              >
-                {collection.title}
-              </Link>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
 
         {products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.slug} product={product} />
             ))}
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-xl text-gray-500 mb-4">No products found</p>
+            <p className="text-xl text-gray-500 mb-4">New stock arrives every week</p>
             <p className="text-gray-400 mb-8">
-              Make sure your Shopify store is connected and has products.
+              Call us or visit our showroom to see what&apos;s available today.
             </p>
-            <Link href="/" className="btn-primary inline-block">
-              Back to Home
-            </Link>
+            <a href={`tel:${businessInfo.phone}`} className="btn-primary inline-block">
+              Call {businessInfo.phone}
+            </a>
           </div>
         )}
       </div>
